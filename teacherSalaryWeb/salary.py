@@ -10,7 +10,11 @@ Created on Thu Aug 10 15:02:54 2017
 from .db import DB
 from .countSalary import TeacherInfo, SalarySheet, AnswerSalary
 
-        
+
+CSV_FILE = 'salary.csv' 
+HTML_FILE = 'salary_table.html' 
+
+       
 
 def get_answers(date_from, date_to):
     get_answer_sql = '''
@@ -47,7 +51,7 @@ def get_answers(date_from, date_to):
         
 
     
-def salary_sheet(date_from, date_to, csvfile=None):
+def salary_sheet(date_from, date_to):
     answers = get_answers(date_from, date_to)
     all_answer_salary = AnswerSalary(answers).free_answers_salary() + \
                         AnswerSalary(answers).charged_answers_salary()
@@ -55,7 +59,8 @@ def salary_sheet(date_from, date_to, csvfile=None):
     teacher_ids = ','.join('{}'.format(item[0]) for item in answers)
     teacher_infos = TeacherInfo(teacher_ids).get_teacher_info
     
-    SalarySheet(all_answer_salary, teacher_infos, csvfile)
+    SalarySheet(all_answer_salary, teacher_infos, CSV_FILE, HTML_FILE)
+
     
 
 #

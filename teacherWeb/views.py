@@ -10,7 +10,9 @@ def index(request):
 def count_salary(request):
     dateFrom = request.session.get("date_from")
     dateTo = request.session.get("date_to")
-    salary_out = salary_sheet(dateFrom, dateTo)
+    salary_sheet(dateFrom, dateTo)
+    return render(request, "result.html")
+    
     
     
     

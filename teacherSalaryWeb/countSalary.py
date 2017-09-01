@@ -228,10 +228,11 @@ class AnswerSalary():
 
 class SalarySheet():
     
-    def __init__(self, answers, teacher_infos, csv_file=None):
+    def __init__(self, answers, teacher_infos, csv_file, html_file):
         self.answers = answers
         self.teacher_infos = teacher_infos
         self.csv = csv_file
+        self.html = html_file
         
 
     def salary_sheet(self):
@@ -256,10 +257,8 @@ class SalarySheet():
         teacher_info_salary = pd.merge(salary_per_type2, df, on=('teacher_id', 'cc'), how='outer')
         teacher_info_salary = teacher_info_salary.loc[:, ['teacher_id','name','username','rating','answer_type','answer_time','salary','salarySum']]
         ##
-        if self.csv:
-            teacher_info_salary.to_csv(self.csv, encoding='utf-8-sig')
-        else:
-            return teacher_info_salary
+        teacher_info_salary.to_csv(self.csv, encoding='utf-8-sig')
+        teacher_info_salary.to_html(self.html, encoding='utf-8-sig')
         
 
 
